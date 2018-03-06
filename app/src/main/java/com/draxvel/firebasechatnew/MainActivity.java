@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("chat222", "buttonSendlistener");
                 EditText input = (EditText) findViewById(R.id.editText);
 
                 //відправляємо екземпляр повідомлення в базу
@@ -65,18 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Log.i("chat222", "startActivityForResult");
 
             startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .build(), SIGN_IN_REQUEST_CODE);
 
         }else             {
-            Log.i("chat222", FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
             displayChat();
         }
-
-
     }
 
     @Override
@@ -93,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayChat() {
-
-        Log.i("chat222", "displayChat");
 
         ListView listView = (ListView) findViewById(R.id.listView);
         Query query = FirebaseDatabase.getInstance().getReference();
@@ -130,14 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == SIGN_IN_REQUEST_CODE){
             if (requestCode==RESULT_OK){
-                Log.i("chat222", "Вхід виконано");
-
                 Snackbar.make(relativeLayout, "Вхід виконано", Snackbar.LENGTH_SHORT).show();
                 displayChat();
             }
             else{
-                Log.i("chat222", "Вхід не виконано");
-
                 Snackbar.make(relativeLayout, "Вхід не виконано", Snackbar.LENGTH_SHORT).show();
                 finish();
             }
